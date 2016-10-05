@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
+'use strict';
+const express = require('express');
+const router = express.Router();
 
-var users = require('../controllers/Users'); // Nous allons récuperer notre controlleur fait précédement
+const users = require('../controllers/Users'); // Nous allons récuperer notre controlleur fait précédement
 
 /* GET Récupère la liste des utilisateurs */
 router.get('/', users.index);

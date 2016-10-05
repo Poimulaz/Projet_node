@@ -1,9 +1,10 @@
 /**
  * Created by Pierre on 05/10/2016.
  */
+'use strict';
 require('../modelsMongoose/User');
 
-var mongoose = require('mongoose'),
+const mongoose = require('mongoose'),
     User = mongoose.model('User');
 
 
