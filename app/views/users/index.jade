@@ -6,3 +6,9 @@ extends ../layout
 block content
     // Nous affichons une variable title, le = nous permet d'échapper le caractère
     h1=title
+
+
+
+    ul
+        each user in users
+            li= user.name

@@ -6,9 +6,10 @@ const users = require('../controllers/Users'); // Nous allons récuperer notre c
 
 /* GET Récupère la liste des utilisateurs */
 router.get('/', users.index);
+router.get('/inscription', users.inscription);
 
 /* POST Création d'un nouvel utilisateur */
-router.post('/', users.create);
+router.post('/inscription', users.create);
 
 /* PUT Modification d'un utilisateur */
 router.put('/:id(\\d+)', users.update);

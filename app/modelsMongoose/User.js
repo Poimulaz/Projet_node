@@ -9,7 +9,7 @@ const mongoose = require('mongoose'), // Nous appelons le module mongoose
 var schema = new Schema({
     name: {type: String, required: true},
     firstName: {type: String, required: true},
-    nickname: {type: String, required: true},
+    nickname: {type: String, required: false},
     email: {type: String, required: true},
     password: {type: String, required: true},
     createdOn: {type: Date, default: Date.now}
