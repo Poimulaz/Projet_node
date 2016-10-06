@@ -1,0 +1,17 @@
+//
+   Created by Pierre on 06/10/2016.
+
+extends ../layout
+
+block content
+
+    form(action='' method='put')
+        input(type='text' name="firstname" placeholder='FirstName' value=u.firstName)
+        br
+        input(type='text' name="name" placeholder='Name' value=u.name)
+        br
+        input(type='text' name="nickname" placeholder='nickname' value=u.nickname)
+        br
+        input(type='mail' name="email" placeholder='email' value=u.email)
+        br
+        input(type='submit')

@@ -6,11 +6,13 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var session = require('express-session')
 
 const routes = require('./app/routes/index');
 const users = require('./app/routes/users');
 
 const app = express();
+const User = mongoose.model('User');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -23,6 +25,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session(
+    { secret: 'keyboard cat',
+      id_user: ' '
+    }));
 
 app.use('/', routes);
 app.use('/users', users);;
