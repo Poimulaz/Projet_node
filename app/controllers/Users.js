@@ -19,8 +19,6 @@ function champs_plein(req){
     }
 }
 
-
-
 var Users = {
     index: function (req, res) {
 
@@ -116,19 +114,22 @@ var Users = {
                             console.log("sess2: " + session.id_user);
                         })
                     });
+                    res.redirect('/users');
                     res.end();
                 }
 
             });
     },
     modification: function (req, res){
-        User.findById(req.params.id, function (err, u) {
+        User.findById(req.session.id_user, function (err, u) {
             if (err) throw err;
+
+            console.log(u);
 
             res.render('users/modification', {
                 title: 'home',
                 active: 'account',
-                user: 'u'
+                user: u
             });
             res.end();
         });

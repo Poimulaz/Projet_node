@@ -6,10 +6,11 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-var session = require('express-session')
+var session = require('express-session');
 
 const routes = require('./app/routes/index');
 const users = require('./app/routes/users');
+const articles = require('./app/routes/articles');
 
 const app = express();
 const User = mongoose.model('User');
@@ -31,7 +32,8 @@ app.use(session(
     }));
 
 app.use('/', routes);
-app.use('/users', users);;
+app.use('/users', users);
+app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

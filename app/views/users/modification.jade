@@ -5,13 +5,13 @@ extends ../layout
 
 block content
 
-    form(action='' method='put')
-        input(type='text' name="firstname" placeholder='FirstName' value=u.firstName)
+    form(action='/user?_method#=put' method='post')
+        input(type='text' name="firstname" placeholder='FirstName' value=user.firstName)
         br
-        input(type='text' name="name" placeholder='Name' value=u.name)
+        input(type='text' name="name" placeholder='Name' value=user.name)
         br
-        input(type='text' name="nickname" placeholder='nickname' value=u.nickname)
+        input(type='text' name="nickname" placeholder='nickname' value=user.nickname)
         br
-        input(type='mail' name="email" placeholder='email' value=u.email)
+        input(type='mail' name="email" placeholder='email' value=user.email)
         br
         input(type='submit')
