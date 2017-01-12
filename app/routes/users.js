@@ -32,4 +32,9 @@ router.put('/modification:id(\\d+)', users.update);
 /* DELETE Suppression d'un utilisateur */
 router.delete('/:id(\\d+)', users.delete);
 
+router.get('/ckeditor', function(req, res){
+    res.render('ckeditor');
+    res.end();
+});
+
 module.exports = router;
