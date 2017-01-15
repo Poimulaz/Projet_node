@@ -7,8 +7,27 @@ block content
     // Nous affichons une variable title, le = nous permet d'échapper le caractère
     h1=title
 
+    if (user)
+        h2= ("log as:   " + user.name + " " +  user.nickname + "  " + user.firstName)
+        a(href='/users/deconnexion')
+            input(type='button', value='deconnexion')
 
+    if(users)
+        ul
+            each user in users
+                li= user.name + "   " + user.firstName + " " + user.nickname + "   " + user.email + "   " + user.password
+    if (!user && users)
+        a(href='/users/inscription')
+            input(type='button', value='inscription')
+        a(href='/users/connexion')
+            input(type='button', value='connexion')
+    if (user)
+        br
+        br
+        a(href='/users/modification')
+            input(type='button', value='modification')
+        a(href='/users/delete')
+            input(type='button', value='delete')
 
-    ul
-        each user in users
-            li= user.name
+    block article
+

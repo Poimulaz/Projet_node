@@ -10,22 +10,25 @@ const mongoose = require('mongoose'),
 
 var Users = {
     index: function (req, res) {
-
         User.find({}, function (err, users) {
             if (err) throw err;
-            if(req.session.id_user != " "){
-                User.findById(req.session.id_user, function(err, thisUser){
-                    console.log(thisUser);
-                });
-            }
-            // object of all the users
-            res.render('users', {
-                title: 'home',
-                active: 'account',
-                users: users
-            });
+                if(req.session.id_user != " "){
+                    User.findById(req.session.id_user, function(err, user){
+                    res.render('users', {
+                        title: 'home',
+                        active: 'account',
+                        users: users,
+                        user: user
+                    });
+                    });
+                }else{
+                    res.render('users', {
+                        title: 'home',
+                        active: 'account',
+                        users: users
+                    });
+                }
         });
-
     },
     create: function (req, res) {
         var callback1 = new Promise(function (resolve, reject) {
@@ -73,7 +76,6 @@ var Users = {
                 if (!err) {
                     console.log('User inserted');
                 }
-                console.log(user);
                 res.redirect('/users');
                 res.end();
             });
@@ -81,7 +83,6 @@ var Users = {
         });
     },
     read: function (req, res){
-
         var callback1 = new Promise(function (resolve, reject) {
             console.log('verif_post');
             if (req.body.name != '' && req.body.firstname != '' && req.body.email != '' && req.body.password != '') {
@@ -90,8 +91,7 @@ var Users = {
             } else {
                 reject();
                 console.log('Un champ du formulaire est vide');
-                console.log('inscription failed');
-                res.redirect('/users');
+                res.redirect('/users/connexion');
                 res.end();
             }
         });
@@ -103,39 +103,41 @@ var Users = {
                     if(user.some(function callbackfn(user) {
                         return (user.email == req.body.email && user.password == req.body.password);
                     })){
+                        console.log("resolve");
                         resolve();
                     }
                     else{
+                        console.log("reject");
                         reject();
+                        console.log('connexion failed');
+                        res.redirect('/users/connexion');
+                        res.end();
                     }
                 })
             });
         });
 
         callback2.then(function () {
-            console.log('email: ' + req.body.email);
             User.findOne({email: req.body.email}, function (err, user) {
                 if (err) throw err;
-                console.log('user: ' + user);
                 var session = req.session;
-                console.log("sess1: " + session.id_user);
-                console.log("user: " + user.id);
                 session.id_user = user.id;
+                session.user = user.name + " " + user.firstName
                 session.save(function(err) {
-                    // session saved
-                    console.log("sess2: " + session.id_user);
                 })
             });
-            res.redirect('/users');
+            res.redirect('/articles');
             res.end();
         });
+    },
+    deconnexion: function (req, res){
+        req.session.id_user = null;
+        res.redirect('/users');
+        res.end();
     },
     modification: function (req, res) {
         User.findById(req.session.id_user, function (err, u) {
             if (err) throw err;
-
-            console.log(u);
-
             res.render('users/modification', {
                 title: 'home',
                 active: 'account',
@@ -144,25 +146,17 @@ var Users = {
             res.end();
         });
     },
-    inscription: function (req, res) {
-        res.render('users/inscription', {
-            title: 'home',
-            active: 'account',
-        });
-        res.end();
-    },
     update: function (req, res) {
 
-        User.findById(req.params.id, function (err, user) {
+        User.findById(req.session.id_user, function (err, user) {
             if (err) throw err;
 
             // change the users location
-            user.name = req.body.name;
-            user.firstName = req.body.firstname;
-            user.nickname =req.body.nickname;
-            user.email = req.body.email;
-            user.password = req.body.password;
-            user.name = 'Josay';
+            user.name = (req.body.name)? req.body.name : user.name;
+            user.firstName = (req.body.firstname)? req.body.firstname : user.firstname;
+            user.nickname =(req.body.nickname)? req.body.nickname : user.nickname;
+            user.email = (req.body.email)? req.body.email : user.email;
+            user.password = (req.body.password)? req.body.password : user.password;
 
             // save the user
             user.save(function (err) {
@@ -172,12 +166,12 @@ var Users = {
             });
 
         });
-
+        res.redirect('/articles');
         res.end();
     },
     delete: function (req, res) {
 
-        User.findById(req.params.id, function (err, user) {
+        User.findById(req.session.id_user, function (err, user) {
             if (err) throw err;
 
             // delete him
@@ -187,7 +181,7 @@ var Users = {
                 console.log('User successfully deleted!');
             });
         });
-
+        res.redirect('/users');
         res.end();
     }
 };

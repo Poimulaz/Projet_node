@@ -1,0 +1,17 @@
+//
+   Created by Pierre on 15/01/2017.
+
+extends ../users/index
+// nous déclarons le block qui sera inséré dans le layout
+block article
+    // Nous affichons une variable title, le = nous permet d'échapper le caractère
+
+    textarea(name="article", rows='10', cols='80',disabled)
+        li= article.titre + " " +  article.contenu
+
+    br
+    br
+    a(href='/articles/create')
+        input(type='button', value='Creer un article')
+    a(href='/articles/update')
+        input(type='button', value='modifier')

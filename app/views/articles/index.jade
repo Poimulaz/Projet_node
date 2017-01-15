@@ -1,12 +1,22 @@
 //
    Created by gibertclement on 06/10/2016.
 
-extends ../layout
+extends ../users/index
 // nous déclarons le block qui sera inséré dans le layout
-block content
+block article
     // Nous affichons une variable title, le = nous permet d'échapper le caractère
-    h1=title
-
     ul
-        each article in articles
-            li= article.titre
+        form(action='/articles/read' method='post')
+            each article in articles
+                textarea(name="article", rows='10', cols='80',disabled)
+                    li= article.titre + " " +  article.contenu
+                input(type='hidden',name="article", value= article)
+                input(type='submit', value="submit")
+
+    br
+    br
+    a(href='/articles/create')
+        input(type='button', value='Creer un article')
+    form(action='/articles?_method=PUT' method='post')
+        input(type="text", name="title", value="nom de l'article")
+        input(type='button', value='Chercher un article')

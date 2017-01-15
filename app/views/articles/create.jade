@@ -7,13 +7,13 @@ extends ../layout
 
 block content
     form(action='' method='post')
-        input(type='text' name="titrearticle" placeholder="Titre de l'article")
+        input(type='text' name="titre" placeholder="Titre de l'article")
         br
         br
-        textarea#editor1(name='editor1', rows='10', cols='80')
+        textarea#editor1(name='contenu', rows='10', cols='80')
             | This is my textarea to be replaced with CKEditor.
         script.
             // Replace the <textarea id="editor1"> with a CKEditor
             // instance, using default configuration.
-            CKEDITOR.replace('editor1');
+            CKEDITOR.replace('contenu');
         input(type='submit')

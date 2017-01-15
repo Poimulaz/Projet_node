@@ -21,6 +21,30 @@ router.get('/create', function (req, res) {
 
 });
 
+router.put('/', function(req, res){
+    User.find({title: req.body.title}, function (err, articles) {
+        res.render('articles', {
+            title: 'home',
+            active: 'account',
+            articles: articles,
+            user: req.session.user
+        });
+    });
+});
+
+router.get('/update', function(req, res){
+    User.find({title: req.body.title}, function (err, articles) {
+        res.render('articles/update', {
+            title: 'home',
+            active: 'account',
+            articles: articles,
+            user: req.session.user
+        });
+    });
+});
+
+router.post('/read', articles.read);
+
 /* PUT Modification d'un article */
 //router.put('/:id(\\d+)', articles.update);
 

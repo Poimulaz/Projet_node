@@ -1,0 +1,12 @@
+//
+   Created by Pierre on 15/01/2017.
+
+extends ../layout
+
+block content
+
+    form(action='/users?_method=DELETE' method='POST')
+        |Are you sure to delete this account?
+        input(type='submit', value='yes')
+    a(href='/users')
+        input(type='button', value='no')
