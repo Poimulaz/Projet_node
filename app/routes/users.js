@@ -6,8 +6,6 @@ const users = require('../controllers/Users'); // Nous allons récuperer notre c
 
 /* GET Récupère la liste des utilisateurs */
 router.get('/', users.index);
-<<<<<<< HEAD
-
 router.get('/connexion', function(req, res){
     res.render('users/connexion', {
         title: 'home',
@@ -29,7 +27,6 @@ router.post('/inscription', users.create);
 router.get('/modification', users.modification);
 /* PUT Modification d'un utilisateur */
 router.put('/modification:id(\\d+)', users.update);
-=======
 router.get('/inscription', users.inscription);
 
 /* POST Création d'un nouvel utilisateur */
@@ -37,17 +34,13 @@ router.post('/inscription', users.create);
 
 /* PUT Modification d'un utilisateur */
 router.put('/:id(\\d+)', users.update);
->>>>>>> origin/CRUDarticle
 
 /* DELETE Suppression d'un utilisateur */
 router.delete('/:id(\\d+)', users.delete);
 
-<<<<<<< HEAD
 router.get('/ckeditor', function(req, res){
     res.render('ckeditor');
     res.end();
 });
 
-=======
->>>>>>> origin/CRUDarticle
 module.exports = router;

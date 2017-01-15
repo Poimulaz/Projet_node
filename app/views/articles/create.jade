@@ -3,11 +3,17 @@
 
 extends ../layout
 
+
+
 block content
     form(action='' method='post')
         input(type='text' name="titrearticle" placeholder="Titre de l'article")
         br
         br
-        textarea(type='textarea' name="contenu")
-        br
+        textarea#editor1(name='editor1', rows='10', cols='80')
+            | This is my textarea to be replaced with CKEditor.
+        script.
+            // Replace the <textarea id="editor1"> with a CKEditor
+            // instance, using default configuration.
+            CKEDITOR.replace('editor1');
         input(type='submit')
