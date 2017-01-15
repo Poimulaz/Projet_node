@@ -5,11 +5,15 @@ const favicon = require('serve-favicon');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-var session = require('express-session')
+const mongoose = require('mongoose');
+var session = require('express-session');
 
 const routes = require('./app/routes/index');
+const users = require('./app/routes/users');
+const articles = require('./app/routes/articles');
 
 const app = express();
+const User = mongoose.model('User');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -27,7 +31,10 @@ app.use(session(
       id_user: ' '
     }));
 
+// ajoute des routes
 app.use('/', routes);
+app.use('/users', users);
+app.use('/articles', articles);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -60,5 +67,10 @@ app.use(function(err, req, res, next) {
   });
 });
 
+mongoose.Promise = global.Promise;
+
+mongoose.connect('mongodb://localhost/morpion', function(err) {
+  if (err) { throw err; }
+});
 
 module.exports = app;

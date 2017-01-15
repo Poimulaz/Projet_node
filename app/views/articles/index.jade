@@ -1,0 +1,12 @@
+//
+   Created by gibertclement on 06/10/2016.
+
+extends ../layout
+// nous déclarons le block qui sera inséré dans le layout
+block content
+    // Nous affichons une variable title, le = nous permet d'échapper le caractère
+    h1=title
+
+    ul
+        each article in articles
+            li= article.titre
