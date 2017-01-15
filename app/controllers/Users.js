@@ -14,11 +14,14 @@ var Users = {
         User.find({}, function (err, users) {
             if (err) throw err;
 
+<<<<<<< HEAD
             if(req.session.id_user != " "){
                 User.findById(req.session.id_user, function(err, thisUser){
                     console.log(thisUser);
                 });
             }
+=======
+>>>>>>> origin/CRUDarticle
             // object of all the users
             res.render('users', {
                 title: 'home',
@@ -28,6 +31,7 @@ var Users = {
         });
 
     },
+<<<<<<< HEAD
     create: function (req, res) {
         var callback1 = new Promise(function (resolve, reject) {
                 console.log('verif_post');
@@ -144,6 +148,70 @@ var Users = {
             });
             res.end();
         });
+=======
+    inscription: function (req, res) {
+        res.render('users/inscription', {
+            title: 'home',
+            active: 'account',
+        });
+        res.end();
+    },
+    create: function (req, res) {
+        var promise = new Promise(
+
+            function(resolve,reject) {
+                var champ_plein;
+                console.log('verif_post');
+                if (req.body.name != '' && req.body.firstname != '' && req.body.email != '' && req.body.password != '') {
+                    console.log('body not null');
+                    champ_plein = true;
+                } else {
+                    console.log('Un champ du formulaire est vide');
+                    champ_plein = false;
+                }
+
+                var notexist;
+                User.find({}, function (err, user) {
+                    console.log('all users find');
+                    notexist = !user.some(function callbackfn(user) {
+                        return (user.name == req.body.name && user.firstName == req.body.firstname);
+                    })
+                }).then(function () {
+                    console.log("user_notexist : " + notexist);
+                    console.log("champ : " + champ_plein);
+                    resolve(notexist && champ_plein);
+                });
+            });
+
+        promise.then(
+            function(conditions) {
+                console.log("conditions:" + (conditions));
+                if (conditions) {
+                    var user = new User({
+                        name: req.body.name,
+                        firstName: req.body.firstname,
+                        email: req.body.email,
+                        password: req.body.password
+                    });
+                    user.save(function (err) {
+                        if (!err) {
+                            console.log('User inserted');
+                        }
+                        console.log(user);
+
+                        res.redirect('/users');
+
+
+                        res.end();
+                    });
+
+                } else {
+                    console.log('inscription failed');
+                    res.redirect('/users/inscription');
+                    res.end();
+                }
+            });
+>>>>>>> origin/CRUDarticle
     },
     update: function (req, res) {
 
@@ -151,11 +219,15 @@ var Users = {
             if (err) throw err;
 
             // change the users location
+<<<<<<< HEAD
             user.name = req.body.name;
             user.firstName = req.body.firstname;
             user.nickname =req.body.nickname;
             user.email = req.body.email;
             user.password = req.body.password;
+=======
+            user.name = 'Josay';
+>>>>>>> origin/CRUDarticle
 
             // save the user
             user.save(function (err) {

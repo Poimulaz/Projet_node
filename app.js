@@ -6,14 +6,21 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+<<<<<<< HEAD
 var session = require('express-session');
+=======
+
+>>>>>>> origin/CRUDarticle
 
 const routes = require('./app/routes/index');
 const users = require('./app/routes/users');
 const articles = require('./app/routes/articles');
 
 const app = express();
+<<<<<<< HEAD
 const User = mongoose.model('User');
+=======
+>>>>>>> origin/CRUDarticle
 
 // view engine setup
 app.set('views', path.join(__dirname, 'app/views'));
@@ -26,11 +33,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+<<<<<<< HEAD
 app.use(session(
     { secret: 'keyboard cat',
       id_user: ' '
     }));
 
+=======
+
+// ajoute des routes
+>>>>>>> origin/CRUDarticle
 app.use('/', routes);
 app.use('/users', users);
 app.use('/articles', articles);
