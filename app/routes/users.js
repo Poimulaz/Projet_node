@@ -11,7 +11,7 @@ router.get('/', users.index);
 router.get('/connexion', function(req, res){
     res.render('users/connexion', {
         title: 'home',
-        active: 'account',
+        active: 'account'
     });
     res.end();
 });
@@ -20,7 +20,7 @@ router.post('/connexion', users.read);
 router.get('/inscription', function(req, res){
     res.render('users/inscription', {
         title: 'home',
-        active: 'account',
+        active: 'account'
     });
     res.end();
 });
@@ -37,7 +37,7 @@ router.put('/', users.update);
 router.get('/inscription', function(req, res) {
     res.render('users/inscription', {
         title: 'Inscription',
-        active: 'account',
+        active: 'account'
     });
     res.end();
 });

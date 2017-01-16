@@ -1,5 +1,6 @@
 //
-   Created by Pierre on 15/01/2017.
+   Created by Pierre on 16/01/2017.
+
 extends ../users/index
 // nous déclarons le block qui sera inséré dans le layout
 block article
@@ -7,7 +8,6 @@ block article
     form(action='/articles/update?_method=PUT' method='post')
         input(type='text' name="titre" placeholder="Titre de l'article" value=article.titre)
         br
-        li= article.titre + article.contenu
         br
         textarea#editor1(name='contenu', rows='10', cols='80')
             = article.contenu

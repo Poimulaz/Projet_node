@@ -6,17 +6,24 @@ extends ../users/index
 block article
     // Nous affichons une variable title, le = nous permet d'échapper le caractère
     ul
-        form(action='/articles/read' method='post')
-            each article in articles
+        each article in articles
+            form(action='/articles/read' method='post')
                 textarea(name="article", rows='10', cols='80',disabled)
-                    li= article.titre + " " +  article.contenu
-                input(type='hidden',name="article", value= article)
-                input(type='submit', value="submit")
+                    = article.titre
+
+
+                    = article.contenu
+                input(type='hidden',name="article", value= article.titre)
+                if(user.id == article.user)
+                    input(type='submit', value="modifier")
+
+
+
 
     br
     br
     a(href='/articles/create')
-        input(type='button', value='Creer un article')
+        input(type='submit', value='Creer un article')
     form(action='/articles?_method=PUT' method='post')
-        input(type="text", name="title", value="nom de l'article")
-        input(type='button', value='Chercher un article')
+        input(type="text", name="titre", placeholder="nom de l'article")
+        input(type='submit', value='Chercher un article')

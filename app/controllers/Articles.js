@@ -13,20 +13,38 @@ const mongoose = require('mongoose'),
 var Articles = {
     index: function (req, res) {
         if (req.session.id_user != undefined) {
-            Article.find({}, function (err, articles) {
-                User.findById(req.session.id_user, function (err, user) {
-                    if (err) throw err;
-                    // object of all the users
-                    res.render('articles', {
-                        title: 'home',
-                        active: 'account',
-                        articles: articles,
-                        user: user
+            if(req.session.recherche == undefined) {
+                Article.find({}, function (err, articles) {
+                    User.findById(req.session.id_user, function (err, user) {
+                        if (err) throw err;
+                        // object of all the users
+                        res.render('articles', {
+                            title: 'home',
+                            active: 'account',
+                            articles: articles,
+                            user: user
+                        });
+                        console.log(articles);
+                        res.end();
                     });
-                    console.log(articles);
-                    res.end();
                 });
-            });
+            }else{
+                Article.find({titre: req.session.recherche}, function (err, articles) {
+                    User.findById(req.session.id_user, function (err, user) {
+                        if (err) throw err;
+                        // object of all the users
+                        req.session.recherche = undefined;
+                        res.render('articles', {
+                            title: 'home',
+                            active: 'account',
+                            articles: articles,
+                            user: user
+                        });
+                        console.log(articles);
+                        res.end();
+                    });
+                });
+            }
         } else {
             res.redirect('/users');
             res.end();
@@ -84,30 +102,85 @@ var Articles = {
     },
     read: function(req, res){
         if(req.body.article != undefined) {
-            var session = req.session;
-            session.article = article.id;
-            session.save(function (err) {
-                if (req.session.id_user != undefined) {
-                    User.findById(req.session.id_user, function (err, user) {
-                        if (err) throw err;
-                        // object of all the users
-                        res.render('articles/read', {
-                            title: 'home',
-                            active: 'account',
-                            article: article,
-                            user: user
+            console.log("article" + req.body.article);
+            Article.find({titre: req.body.article},function (err, article) {
+                console.log("article" + req.body.article);
+                var session = req.session;
+                session.article = article.id;
+                session.save(function (err) {
+                    if (req.session.id_user != undefined) {
+                        User.findById(req.session.id_user, function (err, user) {
+                            if (err) throw err;
+                            // object of all the users
+                            console.log("article" + article);
+                            res.render('articles/read', {
+                                title: 'home',
+                                active: 'account',
+                                article: article,
+                                user: user
+                            });
+                            res.end();
                         });
+                    } else {
+                        res.redirect('/users');
                         res.end();
-                    });
-                } else {
-                    res.redirect('/users');
-                    res.end();
-                }
+                    }
+                });
             });
         }else{
             res.redirect('/articles');
             res.end();
         }
+    },
+    recherche: function(req, res){
+        if (req.session.id_user != undefined) {
+            console.log(req.body.titre);
+            if(req.body.titre != "") {
+                User.findById(req.session.id_user, function (err, user) {
+                    if (err) throw err;
+                    // object of all the users
+                    req.session.recherche = req.body.titre;
+                    res.redirect('/articles');
+                    res.end();
+                });
+            }else{
+                res.redirect('/articles');
+                res.end();
+            }
+        } else {
+            res.redirect('/users');
+            res.end();
+        }
+    },
+    modification: function(req, res){
+        Article.findById({id:req.body.session.article}, function (err, article) {
+            res.render('articles/update', {
+                title: 'home',
+                active: 'account',
+                articles: article,
+                user: req.session.user
+            });
+            res.end();
+        });
+    },
+    update: function(req, res){
+        Article.findById(req.session.article, function (err, article) {
+            if (err) throw err;
+
+            // change the users location
+            article.titre = (req.body.titre)? req.body.titre : article.titre;
+            article.contenu = (req.body.contenu)? req.body.contenu : article.contenu;
+
+            // save the user
+            article.save(function (err) {
+                if (err) throw err;
+
+                console.log('User successfully updated!');
+            });
+
+        });
+        res.redirect('/articles');
+        res.end();
     }
 };
 

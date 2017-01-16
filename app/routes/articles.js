@@ -21,26 +21,20 @@ router.get('/create', function (req, res) {
 
 });
 
-router.put('/', function(req, res){
-    User.find({title: req.body.title}, function (err, articles) {
-        res.render('articles', {
-            title: 'home',
-            active: 'account',
-            articles: articles,
-            user: req.session.user
-        });
-    });
-});
+router.get('/update', articles.modification);
+
+router.put('/', articles.recherche);
+
+router.put('/update', articles.update);
+
 
 router.get('/update', function(req, res){
-    User.find({title: req.body.title}, function (err, articles) {
         res.render('articles/update', {
             title: 'home',
             active: 'account',
             articles: articles,
             user: req.session.user
         });
-    });
 });
 
 router.post('/read', articles.read);

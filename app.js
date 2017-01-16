@@ -30,7 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 app.use(session(
     { secret: 'keyboard cat',
-      id_user: ' '
+      id_user: ' ',
+      user: undefined,
+      article: undefined,
+      recherche: undefined
     }));
 
 // ajoute des routes
